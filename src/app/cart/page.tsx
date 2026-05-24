@@ -30,7 +30,7 @@ export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, getCartTotal } = useCart();
 
   useEffect(() => {
-    document.title = 'Ananya House of Furniture | Cart';
+    document.title = 'SecureGuard Antivirus | Cart';
   }, []);
 
   const subtotal = getCartTotal();
@@ -58,7 +58,8 @@ export default function CartPage() {
   const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
 
   return (
-    <div className="cart-page">
+    <>
+      <div className="cart-page">
       <NavbarWrapper />
       {/* Hero Banner */}
       <div className="cart-hero-banner">
@@ -206,8 +207,8 @@ export default function CartPage() {
           </div>
         </div>
       </div>
-    </div>
-    <Footer />
-    <WhatsAppFloat />
+      <Footer />
+      <WhatsAppFloat />
+    </>
   );
 }
