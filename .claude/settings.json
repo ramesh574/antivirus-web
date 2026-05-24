@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm i *)",
+      "Bash(pnpm add *)",
+      "mcp__plugin_vercel-plugin_vercel__deploy_to_vercel",
+      "mcp__plugin_vercel-plugin_vercel__list_teams",
+      "mcp__plugin_vercel-plugin_vercel__list_projects",
+      "Bash(vercel deploy *)",
+      "mcp__plugin_vercel-plugin_vercel__get_deployment",
+      "Bash(vercel ls *)"
+    ]
+  }
+}
