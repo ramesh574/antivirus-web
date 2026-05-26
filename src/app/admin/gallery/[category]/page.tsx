@@ -1,6 +1,7 @@
-'use client';
+"use client";
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 
 interface GalleryImage {
   _id: string;
@@ -55,18 +56,6 @@ export default function AdminGalleryCategoryPage() {
     setConfirmOpen(true);
   };
 
-  useEffect(() => {
-    const logged = localStorage.getItem('adminLoggedIn');
-    if (logged === 'true') setLoggedIn(true);
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (loggedIn && category) {
-      fetchImages();
-    }
-  }, [loggedIn, category]);
-
   const fetchImages = async () => {
     try {
       const res = await fetch(`/api/gallery?category=${category}`);
@@ -79,6 +68,19 @@ export default function AdminGalleryCategoryPage() {
     }
   };
 
+  useEffect(() => {
+    const logged = localStorage.getItem('adminLoggedIn');
+    if (logged === 'true') setLoggedIn(true);
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (loggedIn && category) {
+      fetchImages();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loggedIn, category]);
+
   const uploadImage = async (file: File) => {
     setUploading(true);
     const reader = new FileReader();
@@ -87,10 +89,7 @@ export default function AdminGalleryCategoryPage() {
         await fetch('/api/admin/gallery', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            category,
-            url: reader.result,
-          }),
+          body: JSON.stringify({ category, url: reader.result }),
         });
         fetchImages();
         showToast('Image uploaded successfully!');
@@ -160,7 +159,6 @@ export default function AdminGalleryCategoryPage() {
 
   return (
     <div className="admin-container">
-      {/* Toast Notification */}
       {toast && (
         <div className="admin-toast">
           <i className="fas fa-check-circle"></i> {toast}
@@ -169,8 +167,8 @@ export default function AdminGalleryCategoryPage() {
       <div className="admin-header">
         <h1><i className="fas fa-images"></i> {categoryName} Gallery</h1>
         <div className="header-actions">
-          <a href="/" className="btn-back"><i className="fas fa-arrow-left"></i> Back to Website</a>
-          <a href="/admin" className="btn-back" style={{ background: 'var(--primary-color)' }}><i className="fas fa-cog"></i> Admin Panel</a>
+          <Link href="/" className="btn-back"><i className="fas fa-arrow-left"></i> Back to Website</Link>
+          <Link href="/admin" className="btn-back" style={{ background: 'var(--primary-color)' }}><i className="fas fa-cog"></i> Admin Panel</Link>
         </div>
       </div>
 
@@ -229,7 +227,6 @@ export default function AdminGalleryCategoryPage() {
         )}
       </div>
 
-      {/* Confirmation Dialog */}
       {confirmOpen && (
         <div className="confirm-overlay" onClick={() => setConfirmOpen(false)}>
           <div className="confirm-dialog" onClick={e => e.stopPropagation()}>

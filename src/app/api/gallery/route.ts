@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
     }
 
     await dbConnect();
-    let filter: Record<string, unknown> = {};
+    const filter: Record<string, unknown> = {};
     if (category !== 'all') {
       filter.category = category;
     } else if (room && room !== 'all') {

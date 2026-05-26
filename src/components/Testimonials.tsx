@@ -106,7 +106,7 @@ export default function Testimonials() {
   useEffect(() => {
     if (!loaded) return;
 
-    let swiperInstance: any = null;
+    let swiperInstance: unknown = null;
 
     const initSwiper = async () => {
       const Swiper = (await import('swiper')).default;
@@ -130,7 +130,7 @@ export default function Testimonials() {
 
     return () => {
       if (swiperInstance) {
-        swiperInstance.destroy(true, true);
+        (swiperInstance as { destroy: () => void }).destroy();
       }
     };
   }, [loaded, reviews.length]);

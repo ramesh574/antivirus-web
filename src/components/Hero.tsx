@@ -1,5 +1,6 @@
-'use client';
+"use client";
 import { useEffect, useState, useRef } from 'react';
+import Link from 'next/link';
 
 const sliders = [
   {
@@ -27,7 +28,7 @@ const sliders = [
 
 export default function HeroSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const swiperRef = useRef<any>(null);
+  const swiperRef = useRef<unknown>(null);
   const initialized = useRef(false);
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function HeroSlider() {
     if (initialized.current) return;
     initialized.current = true;
 
-    let swiperInstance: any = null;
+    let swiperInstance: unknown = null;
 
     const initSwiper = async () => {
       try {
@@ -62,7 +63,7 @@ export default function HeroSlider() {
             renderBullet: (_: number, className: string) => `<span class="${className}"></span>`,
           },
           on: {
-            slideChange: (s: any) => {
+            slideChange: (s: { realIndex: number }) => {
               setCurrentSlide(s.realIndex);
             },
           },
@@ -78,8 +79,8 @@ export default function HeroSlider() {
     initSwiper();
 
     return () => {
-      if (swiperInstance && typeof swiperInstance.destroy === 'function') {
-        swiperInstance.destroy(true, true);
+      if (swiperInstance && typeof (swiperInstance as { destroy?: unknown }).destroy === 'function') {
+        (swiperInstance as { destroy: () => void }).destroy();
         swiperInstance = null;
       }
     };
@@ -111,21 +112,20 @@ export default function HeroSlider() {
                 </div>
                 <p className="hero-subtext">{slide.subtext}</p>
                 <div className="hero-cta-group">
-                  <a href="/products" className="hero-cta-primary">
+                  <Link href="/products" className="hero-cta-primary">
                     <span>View Plans</span>
                     <i className="fas fa-arrow-right"></i>
-                  </a>
-                  <a href="/contact" className="hero-cta-secondary">
+                  </Link>
+                  <Link href="/contact" className="hero-cta-secondary">
                     <span>Contact Us</span>
                     <i className="fas fa-phone"></i>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-
 
       <div className="hero-slider-pagination swiper-pagination"></div>
 

@@ -21,12 +21,15 @@ interface WishlistContextType {
 const WishlistContext = createContext<WishlistContextType | undefined>(undefined);
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
-  const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
-
-  useEffect(() => {
-    const saved = localStorage.getItem('ananya_wishlist');
-    if (saved) setWishlist(JSON.parse(saved));
-  }, []);
+  const [wishlist, setWishlist] = useState<WishlistItem[]>(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      const saved = localStorage.getItem('ananya_wishlist');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
 
   useEffect(() => {
     localStorage.setItem('ananya_wishlist', JSON.stringify(wishlist));

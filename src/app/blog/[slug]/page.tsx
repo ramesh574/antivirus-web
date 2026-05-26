@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import NavbarWrapper from '@/components/NavbarWrapper';
+import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import CloseButton from '@/components/CloseButton';
 

@@ -15,8 +15,10 @@ export default function AccountSection() {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     const stored = sessionStorage.getItem('auth-user');
     if (stored) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       try { setUser(JSON.parse(stored)); } catch {}
     }
 

@@ -5,11 +5,9 @@ export default function Contact() {
   const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(true);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  // no initial useEffect needed for mounted - use true
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '');

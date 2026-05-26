@@ -97,13 +97,7 @@ export default function Gallery() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (popupCategory === 'all') {
-      setFilteredImages(allImages);
-    } else {
-      setFilteredImages(allImages.filter(img => img.category === popupCategory));
-    }
-  }, [popupCategory, allImages]);
+
 
   const openModal = (categoryId: string) => {
     setPopupCategory(categoryId);
@@ -113,7 +107,7 @@ export default function Gallery() {
   const closeModal = () => {
     setPopupOpen(false);
     setPopupCategory('all');
-    setFilteredImages([]);
+    setFilteredImages(allImages);
   };
 
   const openLightbox = (url: string) => {

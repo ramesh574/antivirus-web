@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const aboutData = {
   tagline: 'Welcome to SecureGuard Antivirus',
@@ -51,7 +52,7 @@ export default function AboutSection({ standalone = false }: AboutSectionProps) 
       <div className="about-section-full">
         <div className="about-full-hero">
           <div className="about-full-image">
-            <img src="images/about.jpg" alt="About SecureGuard Antivirus" />
+            <Image src="/images/about.jpg" alt="About SecureGuard Antivirus" width={600} height={400} />
             <div className="about-full-image-overlay" />
           </div>
           <div className="about-full-intro">
@@ -103,7 +104,7 @@ export default function AboutSection({ standalone = false }: AboutSectionProps) 
       <h1 className="heading"> <span>about</span> us</h1>
       <div className="row">
         <div className="image">
-          <img src="images/about.jpg" alt="About SecureGuard" />
+          <Image src="/images/about.jpg" alt="About SecureGuard" width={600} height={400} />
         </div>
         <div className="content">
           <span>{aboutData.tagline}</span>

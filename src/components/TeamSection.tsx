@@ -59,7 +59,7 @@ export default function TeamSection({ standalone = false }: TeamSectionProps) {
     setMounted(true);
     if (standalone) return;
 
-    let swiper: any = null;
+    let swiper: unknown = null;
     const initSwiper = async () => {
       const Swiper = (await import('swiper')).default;
       const { Autoplay } = await import('swiper/modules');
@@ -73,7 +73,7 @@ export default function TeamSection({ standalone = false }: TeamSectionProps) {
       });
     };
     initSwiper();
-    return () => { if (swiper) swiper.destroy(true, true); };
+    return () => { if (swiper && typeof swiper === 'object' && 'destroy' in swiper) (swiper as {destroy:()=>void}).destroy(); };
   }, [standalone]);
 
   if (mounted && standalone) {

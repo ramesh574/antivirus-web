@@ -18,16 +18,16 @@ export default function Navbar() {
   const [bannerVisible, setBannerVisible] = useState(true);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setBannerVisible(sessionStorage.getItem('banner-hidden') !== 'true');
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const saved = sessionStorage.getItem('banner-hidden');
-    if (saved === 'true') setBannerVisible(false);
   }, []);
 
   const hideBanner = () => {

@@ -52,9 +52,9 @@ export async function POST(request: NextRequest) {
     });
     await product.save();
     return NextResponse.json(product, { status: 201 });
-  } catch (error: any) {
-    console.error('Product creation error:', error?.message, error?.errors);
-    return NextResponse.json({ error: 'Failed to create product', details: error?.message }, { status: 500 });
+  } catch (error) {
+    console.error('Product creation error:', (error as {message?:string}).message, (error as {errors?: unknown}).errors);
+    return NextResponse.json({ error: 'Failed to create product', details: (error as {message?:string}).message }, { status: 500 });
   }
 }
 

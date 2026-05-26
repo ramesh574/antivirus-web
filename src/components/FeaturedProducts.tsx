@@ -13,6 +13,7 @@ interface AVProduct {
   features?: string[];
   description?: string;
   isActive: boolean;
+  image?: string;
 }
 
 const featuredData: Record<string, { icon: string; devices: string; price: string; tagline: string }> = {

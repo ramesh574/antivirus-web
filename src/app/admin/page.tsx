@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 interface AVType {
   _id: string;
@@ -62,7 +63,7 @@ export default function AdminPage() {
   const [avTypes, setAvTypes] = useState<AVType[]>([]);
   const [avKeys, setAvKeys] = useState<AVKey[]>([]);
   const [avOrders, setAvOrders] = useState<AVOrder[]>([]);
-  const [contacts, setContacts] = useState<any[]>([]);
+  const [contacts, setContacts] = useState<{_id:string;name:string;email:string;phone:string;message:string;createdAt:string;projectType?:string}[]>([]);
 
   // Form states
   const [typeForm, setTypeForm] = useState({
@@ -121,15 +122,6 @@ export default function AdminPage() {
     checkAuth();
   }, []);
 
-  // Fetch data on tab change
-  useEffect(() => {
-    if (!isAdmin) return;
-    if (activeTab === 'types') fetchTypes();
-    else if (activeTab === 'keys') fetchKeys();
-    else if (activeTab === 'orders') fetchOrders();
-    else if (activeTab === 'contacts') fetchContacts();
-  }, [activeTab, isAdmin, keyFilter, orderStatusFilter]);
-
   const fetchTypes = async () => {
     try {
       const res = await fetch('/api/admin/antivirus/types');
@@ -164,9 +156,20 @@ export default function AdminPage() {
     try {
       const res = await fetch('/api/contacts');
       const data = await res.json();
-      setContacts(Array.isArray(data) ? data : (data.contacts || []));
+      const contactsData = Array.isArray(data) ? data : (data.contacts || []);
+      setContacts(contactsData as unknown as {_id:string;name:string;email:string;phone:string;message:string;createdAt:string;projectType?:string}[]);
     } catch { setContacts([]); }
   };
+
+  // Fetch data on tab change
+  useEffect(() => {
+    if (!isAdmin) return;
+    if (activeTab === 'types') fetchTypes();
+    else if (activeTab === 'keys') fetchKeys();
+    else if (activeTab === 'orders') fetchOrders();
+    else if (activeTab === 'contacts') fetchContacts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab, isAdmin, keyFilter, orderStatusFilter]);
 
   const logout = async () => {
     try { await fetch('/api/auth/logout', { method: 'POST' }); } catch {}
@@ -386,7 +389,7 @@ export default function AdminPage() {
             You do not have admin privileges.
           </p>
           <p style={{ textAlign: 'center' }}>
-            <a href="/" style={{ color: '#ce962e' }}>Go back to homepage</a>
+            <Link href="/" style={{ color: '#ce962e' }}>Go back to homepage</Link>
           </p>
         </div>
       </div>
@@ -400,7 +403,7 @@ export default function AdminPage() {
       <div className="admin-header">
         <h1><i className="fas fa-shield-alt"></i> SecureGuard Admin Panel</h1>
         <div className="header-actions">
-          <a href="/" className="btn-back"><i className="fas fa-arrow-left"></i> Website</a>
+          <Link href="/" className="btn-back"><i className="fas fa-arrow-left"></i> Website</Link>
           <button className="btn-logout" onClick={logout}><i className="fas fa-sign-out-alt"></i> Logout</button>
         </div>
       </div>
@@ -794,7 +797,7 @@ export default function AdminPage() {
           <div>
             <h2><i className="fas fa-envelope"></i> Contact Submissions ({contacts.length})</h2>
             <div className="contacts-list">
-              {contacts.map((c: any) => (
+              {contacts.map((c) => (
                 <div key={c._id} className="contact-admin-card">
                   <div className="contact-admin-header">
                     <h3>{c.name}</h3>

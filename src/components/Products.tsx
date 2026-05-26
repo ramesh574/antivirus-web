@@ -13,6 +13,7 @@ interface AVProduct {
   features?: string[];
   description?: string;
   isActive: boolean;
+  image?: string;
 }
 
 export default function Products() {

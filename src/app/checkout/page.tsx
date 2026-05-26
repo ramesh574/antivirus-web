@@ -8,7 +8,7 @@ import CloseButton from '@/components/CloseButton';
 
 declare global {
   interface Window {
-    Razorpay: any;
+    Razorpay: new (options: Record<string, unknown>) => { on: (event: string, cb: (response: unknown) => void) => void; open: () => void; close: () => void };
   }
 }
 

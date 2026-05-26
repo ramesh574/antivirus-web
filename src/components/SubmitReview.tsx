@@ -32,7 +32,6 @@ export default function SubmitReview({ onClose }: SubmitReviewProps) {
   });
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [photo, setPhoto] = useState<string>('');
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
@@ -49,7 +48,7 @@ export default function SubmitReview({ onClose }: SubmitReviewProps) {
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setPhotoFile(file);
+    // file selected
     const reader = new FileReader();
     reader.onload = () => setPhoto(reader.result as string);
     reader.readAsDataURL(file);
@@ -236,7 +235,7 @@ export default function SubmitReview({ onClose }: SubmitReviewProps) {
                     <img src={photo} alt="Preview" style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '8px' }} />
                     <button
                       type="button"
-                      onClick={() => { setPhoto(''); setPhotoFile(null); }}
+                      onClick={() => { setPhoto(''); }}
                       style={{
                         position: 'absolute',
                         top: '-8px',
