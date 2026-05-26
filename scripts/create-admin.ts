@@ -16,13 +16,13 @@ async function createAdmin() {
 
     const User = mongoose.models.User || mongoose.model('User', UserSchema);
 
-    const hashedPassword = await bcrypt.hash('ananya123', 10);
+    const hashedPassword = await bcrypt.hash('secureguard123', 10);
 
     const result = await User.findOneAndUpdate(
-      { email: 'ananya@ananya.com' },
+      { email: 'admin@secureguard.com' },
       {
         name: 'Admin',
-        email: 'ananya@ananya.com',
+        email: 'admin@secureguard.com',
         password: hashedPassword,
         isAdmin: true,
       },
